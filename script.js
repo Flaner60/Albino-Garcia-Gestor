@@ -6,120 +6,189 @@ let personal = [];
 let personalDetalles = {};
 let currentFilter = '';
 
-// ==================== DATOS DE PERMISOS ECONÓMICOS (DEL ARCHIVO EXCEL) ====================
+// ==================== DATOS DE PERMISOS ECONÓMICOS (DEL ARCHIVO EXCEL COMPLETO) ====================
 const permisosEconomicosData = [
-    { nombre: "PROFR. LUIS CESAR ANDRADE GONZÁLEZ", matricula: "DIR-001", fecha: "2026-02-11,12,13", mes: "FEB", motivo: "Permiso económico" },
-    { nombre: "PROFRA. MARIA FELICITAS HERNÁNDEZ RODRÍGUEZ", matricula: "DOC-001", fecha: "2026-03-02,03,04", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "PROFRA. MARIA FELICITAS HERNÁNDEZ RODRÍGUEZ", matricula: "DOC-001", fecha: "2026-03-17", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "PROFRA. VERÓNICA VEGA TREJO", matricula: "SUB-001", fecha: "2025-11-13,14", mes: "NOV", motivo: "Permiso económico" },
-    { nombre: "PROFRA. VERÓNICA VEGA TREJO", matricula: "SUB-001", fecha: "2026-03-18,19,20", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "ARACELI CAMARGO BARRÓN", matricula: "DOC-040", fecha: "2025-09-12,15,17", mes: "SEP", motivo: "Permiso económico" },
-    { nombre: "ARACELI CAMARGO BARRÓN", matricula: "DOC-040", fecha: "2026-02-10", mes: "FEB", motivo: "Permiso económico" },
-    { nombre: "ALMA DELIA MORENO GUTIÉRREZ", matricula: "DOC-003", fecha: "2025-11-26,27,28", mes: "NOV", motivo: "Permiso económico" },
-    { nombre: "ALMA DELIA MORENO GUTIÉRREZ", matricula: "DOC-003", fecha: "2026-02-11,12,13", mes: "FEB", motivo: "Permiso económico" },
-    { nombre: "ALMA DELIA MORENO GUTIÉRREZ", matricula: "DOC-003", fecha: "2026-03-11,12", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "MARIA EDITH IVONNE NAVA BAUTISTA", matricula: "DOC-004", fecha: "2025-10-20,21,22", mes: "OCT", motivo: "Permiso económico" },
-    { nombre: "MARIA EDITH IVONNE NAVA BAUTISTA", matricula: "DOC-004", fecha: "2025-11-26,27,28", mes: "NOV", motivo: "Permiso económico" },
-    { nombre: "MARIA EDITH IVONNE NAVA BAUTISTA", matricula: "DOC-004", fecha: "2025-12-25", mes: "DIC", motivo: "Permiso económico" },
-    { nombre: "MARIA GUADALUPE PÉREZ BATALLA", matricula: "DOC-005", fecha: "2025-10-29,30,31", mes: "OCT", motivo: "Permiso económico" },
-    { nombre: "MARIA GUADALUPE PÉREZ BATALLA", matricula: "DOC-005", fecha: "2026-03-09,10,11", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "FERNANDO VENTURA GUTIÉRREZ", matricula: "DOC-006", fecha: "2026-03-17,19,20", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "CECILIA ALFARO PARAMO", matricula: "DOC-007", fecha: "2025-12-01,02,03", mes: "DIC", motivo: "Permiso económico" },
-    { nombre: "CECILIA ALFARO PARAMO", matricula: "DOC-007", fecha: "2026-03-02", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "GERARDO DAVID GARCÍA GONZÁLEZ", matricula: "DOC-009", fecha: "2025-10-15,16,17", mes: "OCT", motivo: "Permiso económico" },
-    { nombre: "ALAN ESQUIVEL CAMPOS", matricula: "DOC-013", fecha: "2025-12-03,04,05", mes: "DIC", motivo: "Permiso económico" },
-    { nombre: "ALAN ESQUIVEL CAMPOS", matricula: "DOC-013", fecha: "2026-03-17", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "MARÍA DEL ROCÍO NAVA BAUTISTA", matricula: "DOC-023", fecha: "2025-10-20,21,22", mes: "OCT", motivo: "Permiso económico" },
-    { nombre: "MARÍA DEL ROCÍO NAVA BAUTISTA", matricula: "DOC-023", fecha: "2025-11-26,27,28", mes: "NOV", motivo: "Permiso económico" },
-    { nombre: "ERIK DAVID BARRERA JUÁREZ", matricula: "ADM-015", fecha: "2025-12-01,02", mes: "DIC", motivo: "Permiso económico" },
-    { nombre: "ANDRÉS ISAÍAS CHÁVEZ NOLASCO", matricula: "DOC-011", fecha: "2025-11-05,06,07", mes: "NOV", motivo: "Permiso económico" },
-    { nombre: "SANTIAGO BALDERAS BAEZA", matricula: "DOC-012", fecha: "2025-10-22,23,24", mes: "OCT", motivo: "Permiso económico" },
-    { nombre: "SANTIAGO BALDERAS BAEZA", matricula: "DOC-012", fecha: "2026-02-18,19,20", mes: "FEB", motivo: "Permiso económico" },
-    { nombre: "JONATHAN JAIR MIRAMONTES AGUILAR", matricula: "DOC-014", fecha: "2025-11-07,24", mes: "NOV", motivo: "Permiso económico" },
-    { nombre: "JONATHAN JAIR MIRAMONTES AGUILAR", matricula: "DOC-014", fecha: "2025-12-01", mes: "DIC", motivo: "Permiso económico" },
-    { nombre: "BLANCA ESTELA VALDIVIA RAZO", matricula: "DOC-029", fecha: "2025-12-03,04,05", mes: "DIC", motivo: "Permiso económico" },
-    { nombre: "BLANCA ESTELA VALDIVIA RAZO", matricula: "DOC-029", fecha: "2026-03-10,11,12", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "DIEGO EDUARDO PRADO CALDERÓN", matricula: "DOC-030", fecha: "2025-12-10", mes: "DIC", motivo: "Permiso económico" },
-    { nombre: "DIANA VALERIA ORTEGA DIAZ", matricula: "DOC-027", fecha: "2025-10-27", mes: "OCT", motivo: "Permiso económico" },
-    { nombre: "ELVA ALEJANDRA MORALES MARTÍNEZ", matricula: "DOC-028", fecha: "2025-10-23", mes: "OCT", motivo: "Permiso económico" },
-    { nombre: "ELVA ALEJANDRA MORALES MARTÍNEZ", matricula: "DOC-028", fecha: "2026-03-10,11,12", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "GLORIA MATILDE BARRERA JUÁREZ", matricula: "ADM-016", fecha: "2026-01-13", mes: "ENE", motivo: "Permiso económico" },
-    { nombre: "ITZEL MARICELA GALLARDO ÁLVAREZ", matricula: "DOC-015", fecha: "2026-03-03,04", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", matricula: "DOC-014", fecha: "2025-10-06", mes: "OCT", motivo: "Permiso económico" },
-    { nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", matricula: "DOC-014", fecha: "2025-11-03,04,05", mes: "NOV", motivo: "Permiso económico" },
-    { nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", matricula: "DOC-014", fecha: "2025-12-05", mes: "DIC", motivo: "Permiso económico" },
-    { nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", matricula: "DOC-014", fecha: "2026-02-04", mes: "FEB", motivo: "Permiso económico" },
-    { nombre: "AMALIA KARINA SANTIAGO LARA", matricula: "DOC-016", fecha: "2025-12-01", mes: "DIC", motivo: "Permiso económico" },
-    { nombre: "AMALIA KARINA SANTIAGO LARA", matricula: "DOC-016", fecha: "2026-02-24,25,26", mes: "FEB", motivo: "Permiso económico" },
-    { nombre: "MANUEL GONZÁLEZ SILVA", matricula: "DOC-017", fecha: "2026-03-02,03,04", mes: "MAR", motivo: "Permiso económico" },
-    { nombre: "CORNELIO MOGOLLÓN MONDRAGÓN", matricula: "DOC-018", fecha: "2025-10-21", mes: "OCT", motivo: "Permiso económico" },
-    { nombre: "CORNELIO MOGOLLÓN MONDRAGÓN", matricula: "DOC-018", fecha: "2025-11-12,13,14", mes: "NOV", motivo: "Permiso económico" },
-    { nombre: "CORNELIO MOGOLLÓN MONDRAGÓN", matricula: "DOC-018", fecha: "2026-01-27", mes: "ENE", motivo: "Permiso económico" }
+    // FEBRERO 2026
+    { nombre: "PROFR. LUIS CESAR ANDRADE GONZÁLEZ", matricula: "DIR-001", fecha: "11,12,13", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "PROFRA. MARIA FELICITAS HERNÁNDEZ RODRÍGUEZ", matricula: "DOC-001", fecha: "02,03,04", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "PROFRA. MARIA FELICITAS HERNÁNDEZ RODRÍGUEZ", matricula: "DOC-001", fecha: "17", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "PROFRA. VERÓNICA VEGA TREJO", matricula: "SUB-001", fecha: "13,14", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "PROFRA. VERÓNICA VEGA TREJO", matricula: "SUB-001", fecha: "18,19,20", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ARACELI CAMARGO BARRÓN", matricula: "DOC-002", fecha: "12,15,17", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ARACELI CAMARGO BARRÓN", matricula: "DOC-002", fecha: "10", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "ALMA DELIA MORENO GUTIÉRREZ", matricula: "DOC-003", fecha: "26,27,28", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ALMA DELIA MORENO GUTIÉRREZ", matricula: "DOC-003", fecha: "11,12,13", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ALMA DELIA MORENO GUTIÉRREZ", matricula: "DOC-003", fecha: "11,12", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "MARIA EDITH IVONNE NAVA BAUTISTA", matricula: "DOC-004", fecha: "20,21,22", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "MARIA EDITH IVONNE NAVA BAUTISTA", matricula: "DOC-004", fecha: "26,27,28", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "MARIA EDITH IVONNE NAVA BAUTISTA", matricula: "DOC-004", fecha: "25", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "MARIA GUADALUPE PÉREZ BATALLA", matricula: "DOC-005", fecha: "29,30,31", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "MARIA GUADALUPE PÉREZ BATALLA", matricula: "DOC-005", fecha: "09,10,11", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "FERNANDO VENTURA GUTIÉRREZ", matricula: "DOC-006", fecha: "17,19,20", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "CECILIA ALFARO PARAMO", matricula: "DOC-007", fecha: "01,02,03", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "CECILIA ALFARO PARAMO", matricula: "DOC-007", fecha: "2", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "GERARDO DAVID GARCÍA GONZÁLEZ", matricula: "DOC-009", fecha: "15,16,17", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ALAN ESQUIVEL CAMPOS", matricula: "DOC-013", fecha: "03,04,05", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ALAN ESQUIVEL CAMPOS", matricula: "DOC-013", fecha: "17", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "MARÍA DEL ROCÍO NAVA BAUTISTA", matricula: "DOC-023", fecha: "20,21,22", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "MARÍA DEL ROCÍO NAVA BAUTISTA", matricula: "DOC-023", fecha: "26,27,28", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ERIK DAVID BARRERA JUÁREZ", matricula: "ADM-015", fecha: "01,02", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "ANDRÉS ISAÍAS CHÁVEZ NOLASCO", matricula: "DOC-011", fecha: "5,6,7", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "SANTIAGO BALDERAS BAEZA", matricula: "DOC-012", fecha: "22,23,24", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "SANTIAGO BALDERAS BAEZA", matricula: "DOC-012", fecha: "18,19,20", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "JONATHAN JAIR MIRAMONTES AGUILAR", matricula: "DOC-014", fecha: "7,24", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "JONATHAN JAIR MIRAMONTES AGUILAR", matricula: "DOC-014", fecha: "1", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "BLANCA ESTELA VALDIVIA RAZO", matricula: "DOC-029", fecha: "03,04,05", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "BLANCA ESTELA VALDIVIA RAZO", matricula: "DOC-029", fecha: "10,11,12", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "DIEGO EDUARDO PRADO CALDERÓN", matricula: "DOC-030", fecha: "10", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "DIANA VALERIA ORTEGA DIAZ", matricula: "DOC-027", fecha: "27", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "ELVA ALEJANDRA MORALES MARTÍNEZ", matricula: "DOC-028", fecha: "23", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "ELVA ALEJANDRA MORALES MARTÍNEZ", matricula: "DOC-028", fecha: "10,11,12", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "GLORIA MATILDE BARRERA JUÁREZ", matricula: "ADM-016", fecha: "13", mes: "ENE", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "ITZEL MARICELA GALLARDO ÁLVAREZ", matricula: "DOC-015", fecha: "03,04", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", matricula: "DOC-014", fecha: "6", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", matricula: "DOC-014", fecha: "3,4,5", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", matricula: "DOC-014", fecha: "5", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", matricula: "DOC-014", fecha: "4", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "AMALIA KARINA SANTIAGO LARA", matricula: "DOC-016", fecha: "1", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "AMALIA KARINA SANTIAGO LARA", matricula: "DOC-016", fecha: "24,25,26", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "MANUEL GONZÁLEZ SILVA", matricula: "DOC-017", fecha: "02,03,04", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "CORNELIO MOGOLLÓN MONDRAGÓN", matricula: "DOC-018", fecha: "21", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "CORNELIO MOGOLLÓN MONDRAGÓN", matricula: "DOC-018", fecha: "12,13,14", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "CORNELIO MOGOLLÓN MONDRAGÓN", matricula: "DOC-018", fecha: "27", mes: "ENE", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "SILVIA MARGARITA FLORES TORRES", matricula: "DOC-041", fecha: "4,15", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "DULCE BRISA BARRERA JUÁREZ", matricula: "ADM-017", fecha: "7", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "EDUARDO FUERTE LONGORIA", matricula: "DOC-021", fecha: "3,4,5", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "GENOVEVA AYALA RENTERIA", matricula: "DOC-026", fecha: "13,14", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "CELIA PIÑA HURTADO", matricula: "DOC-044", fecha: "27,28", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "CELIA PIÑA HURTADO", matricula: "DOC-044", fecha: "1", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "CELIA PIÑA HURTADO", matricula: "DOC-044", fecha: "11,12", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "ÁNGEL MARTÍNEZ JUÁREZ", matricula: "DOC-045", fecha: "24,25", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "AARÓN HERNÁNDEZ MONTES", matricula: "DOC-019", fecha: "06,07,08", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "AARÓN HERNÁNDEZ MONTES", matricula: "DOC-019", fecha: "3", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "GABRIEL BUENDIA RAMÍREZ", matricula: "DOC-020", fecha: "9", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "GABRIEL BUENDIA RAMÍREZ", matricula: "DOC-020", fecha: "07,30", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "ARMANDO ALMANZA GONZÁLEZ", matricula: "DOC-022", fecha: "8,9,10", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "MARIA DE LOURDES VILLAGÓMEZ HERNÁNDEZ", matricula: "DOC-025", fecha: "29,30,31", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "MARIA DE LOURDES VILLAGÓMEZ HERNÁNDEZ", matricula: "DOC-025", fecha: "13,17", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "FRANCISCO ARTURO YAÑEZ PEREZ", matricula: "DOC-024", fecha: "17,27,30", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "FRANCISCO ARTURO YAÑEZ PEREZ", matricula: "DOC-024", fecha: "7,24", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "HÉCTOR JAVIER OJEDA RICO", matricula: "ADM-018", fecha: "22", mes: "ENE", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "HÉCTOR JAVIER OJEDA RICO", matricula: "ADM-018", fecha: "4,6", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "ADILENE FUNES MIRANDA", matricula: "DOC-033", fecha: "6", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "ADILENE FUNES MIRANDA", matricula: "DOC-033", fecha: "24,25,26", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ROSA MARIA DIAZ ZULOAGA", matricula: "DOC-034", fecha: "01,02,03", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ROSA MARIA DIAZ ZULOAGA", matricula: "DOC-034", fecha: "24,25", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "ROBERTO NAVA BAUTISTA", matricula: "DOC-035", fecha: "15,17,18", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ROBERTO NAVA BAUTISTA", matricula: "DOC-035", fecha: "20,21,22", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "GABRIEL PEDRAZA ÁLVAREZ", matricula: "DOC-036", fecha: "24,25", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "GABRIEL PEDRAZA ÁLVAREZ", matricula: "DOC-036", fecha: "23,24,25", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ILIUSI VIRIDIANA RODRÍGUEZ CORTES", matricula: "DOC-046", fecha: "04,05,08", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ILIUSI VIRIDIANA RODRÍGUEZ CORTES", matricula: "DOC-046", fecha: "17,19,20", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "VANIA YITSSELL ECHEVERRÍA GALLEGOS", matricula: "DOC-031", fecha: "26", mes: "ENE", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "OSCAR HILARIO ARENAS SAUCEDA", matricula: "DOC-032", fecha: "20,21", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "MARTHA ANGÉLICA ZAVALA RODRÍGUEZ", matricula: "DOC-038", fecha: "14,19,24", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "MARTHA ANGÉLICA ZAVALA RODRÍGUEZ", matricula: "DOC-038", fecha: "11", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "MARTHA ANGÉLICA ZAVALA RODRÍGUEZ", matricula: "DOC-038", fecha: "20", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "MARTHA ANGÉLICA ZAVALA RODRÍGUEZ", matricula: "DOC-038", fecha: "19,20", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "ENRIQUE GALLARDO SILVA", matricula: "DOC-039", fecha: "06,07,08", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ENRIQUE GALLARDO SILVA", matricula: "DOC-039", fecha: "21", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "ADAN GABRIEL LOREDO CARDENAS", matricula: "DOC-040", fecha: "15,16,17", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ADAN GABRIEL LOREDO CARDENAS", matricula: "DOC-040", fecha: "23,24", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "FRANCISCO JAVIER RAYÓN GONZÁLEZ", matricula: "DOC-043", fecha: "03,06", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "CLAUDIO FABIAN GALLARDO ÁLVAREZ", matricula: "ADM-001", fecha: "17", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "CLAUDIO FABIAN GALLARDO ÁLVAREZ", matricula: "ADM-001", fecha: "21,22,23", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "BANI GIEZI AGUILAR RODRÍGUEZ", matricula: "ADM-002", fecha: "15", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "BANI GIEZI AGUILAR RODRÍGUEZ", matricula: "ADM-002", fecha: "27", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "BANI GIEZI AGUILAR RODRÍGUEZ", matricula: "ADM-002", fecha: "21", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "BANI GIEZI AGUILAR RODRÍGUEZ", matricula: "ADM-002", fecha: "8", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "BANI GIEZI AGUILAR RODRÍGUEZ", matricula: "ADM-002", fecha: "19", mes: "ENE", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "BANI GIEZI AGUILAR RODRÍGUEZ", matricula: "ADM-002", fecha: "24", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JUANA TERESA MARTINEZ CALDERÓN", matricula: "ADM-019", fecha: "13", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JUANA TERESA MARTINEZ CALDERÓN", matricula: "ADM-019", fecha: "10,11", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "JUANA TERESA MARTINEZ CALDERÓN", matricula: "ADM-019", fecha: "29", mes: "ENE", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JUANA TERESA MARTINEZ CALDERÓN", matricula: "ADM-019", fecha: "19", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JUANA TERESA MARTINEZ CALDERÓN", matricula: "ADM-019", fecha: "20,23", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "GUILLERMINA CALDERÓN BARRERA", matricula: "ADM-020", fecha: "05,08", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "GUILLERMINA CALDERÓN BARRERA", matricula: "ADM-020", fecha: "21", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "GUILLERMINA CALDERÓN BARRERA", matricula: "ADM-020", fecha: "16,17,18", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "OLGA LIDIA GARCIA NAVARRO", matricula: "ADM-021", fecha: "11", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "OLGA LIDIA GARCIA NAVARRO", matricula: "ADM-021", fecha: "12,13", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "GERARDO FLORES MARTÍNEZ", matricula: "ADM-006", fecha: "17,20,21", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "RAMIRO GARCÍA MARTÍNEZ", matricula: "ADM-007", fecha: "20,21,22", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "RAMIRO GARCÍA MARTÍNEZ", matricula: "ADM-007", fecha: "8", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "RAMIRO GARCÍA MARTÍNEZ", matricula: "ADM-007", fecha: "16", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "ERIKA LUGO HERRERA", matricula: "ADM-018", fecha: "28,29", mes: "AGO", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "MARIA MERCEDES BRAVO BUTANDA", matricula: "ADM-022", fecha: "03,04,05", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "JUAN MARCOS GÓMEZ FLORES", matricula: "ADM-023", fecha: "04,17", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "JUAN MARCOS GÓMEZ FLORES", matricula: "ADM-023", fecha: "17", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JUAN MARCOS GÓMEZ FLORES", matricula: "ADM-023", fecha: "16", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JUAN MARCOS GÓMEZ FLORES", matricula: "ADM-023", fecha: "5,25", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "LEONOR MARTÍNEZ", matricula: "ADM-017", fecha: "1", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "LEONOR MARTÍNEZ", matricula: "ADM-017", fecha: "06,07", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "LEONOR MARTÍNEZ", matricula: "ADM-017", fecha: "19,20", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "PERLA LIZBETH FLORES MURILLO", matricula: "ADM-020", fecha: "03,04,05", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "PERLA LIZBETH FLORES MURILLO", matricula: "ADM-020", fecha: "20", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "PERLA LIZBETH FLORES MURILLO", matricula: "ADM-020", fecha: "18,19,20", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ERNESTINA CHÁVEZ LÓPEZ", matricula: "ADM-008", fecha: "06,10,11", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "ERNESTINA CHÁVEZ LÓPEZ", matricula: "ADM-008", fecha: "27,28,29", mes: "ENE", anio: "2026", motivo: "Permiso económico", dias: 3 },
+    { nombre: "MA CARMEN GARCÍA OROZCO", matricula: "ADM-009", fecha: "19", mes: "AGO", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "MA CARMEN GARCÍA OROZCO", matricula: "ADM-009", fecha: "02,03", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "MITZI CARMEN CORONA MOSQUEDA", matricula: "ADM-019", fecha: "05,08,18", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "LUIS ALEJANDRO LÓPEZ CAMARGO", matricula: "ADM-024", fecha: "04,05,08", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 3 },
+    { nombre: "RAÚL LUCERO HERNÁNDEZ", matricula: "ADM-025", fecha: "9", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JESÚS ABRAHAM REYES PERALES", matricula: "ADM-026", fecha: "16", mes: "OCT", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JESÚS ABRAHAM REYES PERALES", matricula: "ADM-026", fecha: "11,12", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "RAFAEL RAMÍREZ AMEZQUITA", matricula: "ADM-010", fecha: "26", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "RAFAEL RAMÍREZ AMEZQUITA", matricula: "ADM-010", fecha: "5", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "RAFAEL RAMÍREZ AMEZQUITA", matricula: "ADM-010", fecha: "6", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "RAFAEL RAMÍREZ AMEZQUITA", matricula: "ADM-010", fecha: "6", mes: "MAR", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JOSÉ JORGE LARA RAMÍREZ", matricula: "ADM-011", fecha: "18,19", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "JOSÉ JORGE LARA RAMÍREZ", matricula: "ADM-011", fecha: "7", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "JOSÉ JORGE LARA RAMÍREZ", matricula: "ADM-011", fecha: "22,23", mes: "ENE", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "JOSÉ CRISTOBAL GONZÁLEZ RAMÍREZ", matricula: "ADM-012", fecha: "8", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "BRENDA MICHELLE CISNEROS ACOSTA", matricula: "ADM-013", fecha: "10,11", mes: "SEP", anio: "2025", motivo: "Permiso económico", dias: 2 },
+    { nombre: "BRENDA MICHELLE CISNEROS ACOSTA", matricula: "ADM-013", fecha: "3", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "BRENDA MICHELLE CISNEROS ACOSTA", matricula: "ADM-013", fecha: "2", mes: "DIC", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "BRENDA MICHELLE CISNEROS ACOSTA", matricula: "ADM-013", fecha: "17,18", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "SAN JUANA FONSECA HERNÁNDEZ", matricula: "ADM-021", fecha: "3", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 1 },
+    { nombre: "SAN JUANA FONSECA HERNÁNDEZ", matricula: "ADM-021", fecha: "19", mes: "ENE", anio: "2026", motivo: "Permiso económico", dias: 1 },
+    { nombre: "SAN JUANA FONSECA HERNÁNDEZ", matricula: "ADM-021", fecha: "09,10", mes: "FEB", anio: "2026", motivo: "Permiso económico", dias: 2 },
+    { nombre: "SONIA NÚÑEZ VÁZQUEZ", matricula: "ADM-014", fecha: "12,13,14", mes: "NOV", anio: "2025", motivo: "Permiso económico", dias: 3 }
 ];
 
-// ==================== DATOS DE INCAPACIDADES (DEL ARCHIVO DOCX) ====================
+// ==================== DATOS DE INCAPACIDADES ====================
 const incapacidadesData = [
     { nombre: "BRENDA MICHELLE CISNEROS ACOSTA", matricula: "ADM-013", fechaInicio: "2025-08-18", fechaFin: "2025-08-24", serie: "1032501125005234", dias: 7, motivo: "Incapacidad médica" },
     { nombre: "BRENDA MICHELLE CISNEROS ACOSTA", matricula: "ADM-013", fechaInicio: "2025-08-25", fechaFin: "2025-08-31", serie: "1032501125005367", dias: 7, motivo: "Incapacidad médica" },
     { nombre: "LEONOR MARTÍNEZ", matricula: "ADM-017", fechaInicio: "2025-09-02", fechaFin: "2025-09-04", serie: "1032501125005514", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "ARACELI CAMARGO BARRÓN", matricula: "DOC-040", fechaInicio: "2025-09-03", fechaFin: "2025-09-03", serie: "1032501125005548", dias: 1, motivo: "Incapacidad médica" },
+    { nombre: "ARACELI CAMARGO BARRÓN", matricula: "DOC-002", fechaInicio: "2025-09-03", fechaFin: "2025-09-03", serie: "1032501125005548", dias: 1, motivo: "Incapacidad médica" },
     { nombre: "ITZEL MARICELA GALLARDO ÁLVAREZ", matricula: "DOC-015", fechaInicio: "2025-09-09", fechaFin: "2025-09-11", serie: "1032501125005674", dias: 3, motivo: "Incapacidad médica" },
     { nombre: "SILVIA MARGARITA FLORES TORRES", matricula: "DOC-041", fechaInicio: "2025-09-10", fechaFin: "2025-09-23", serie: "1008601125007825", dias: 14, motivo: "Incapacidad médica" },
     { nombre: "ROBERTO NAVA BAUTISTA", matricula: "DOC-035", fechaInicio: "2025-09-11", fechaFin: "2025-09-12", serie: "1032501125005714", dias: 2, motivo: "Incapacidad médica" },
     { nombre: "MARIA EDITH IVONNE NAVA BAUTISTA", matricula: "DOC-004", fechaInicio: "2025-09-11", fechaFin: "2025-09-12", serie: "1032501125005721", dias: 2, motivo: "Incapacidad médica" },
-    { nombre: "ERIKA LUGO HERRERA", matricula: "ADM-018", fechaInicio: "2025-09-11", fechaFin: "2025-09-12", serie: "1032501125005730", dias: 2, motivo: "Incapacidad médica" },
-    { nombre: "AMALIA KARINA SANTIAGO LARA", matricula: "DOC-016", fechaInicio: "2025-09-18", fechaFin: "2025-09-19", serie: "1032501125005904", dias: 2, motivo: "Incapacidad médica" },
-    { nombre: "AGUSTIN VIDAL FLORES", matricula: "ADM-005", fechaInicio: "2025-09-18", fechaFin: "2025-09-19", serie: "1032501125005895", dias: 2, motivo: "Incapacidad médica" },
-    { nombre: "GENOVEVA AYALA RENTERIA", matricula: "DOC-026", fechaInicio: "2025-09-22", fechaFin: "2025-09-24", serie: "1032501125005987", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "MARIA DEL ROCIO NAVA BAUTISTA", matricula: "DOC-023", fechaInicio: "2025-09-24", fechaFin: "2025-09-26", serie: "1032501125006038", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "JESÚS ABRAHAM REYES PERALES", matricula: "DOC-042", fechaInicio: "2025-09-25", fechaFin: "2025-09-26", serie: "1032501125006072", dias: 2, motivo: "Incapacidad médica" },
-    { nombre: "MARTHA ANGÉLICA ZAVALA RODRÍGUEZ", matricula: "DOC-038", fechaInicio: "2025-09-30", fechaFin: "2025-09-30", serie: "1008601125008563", dias: 1, motivo: "Incapacidad médica" },
-    { nombre: "ROBERTO NAVA BAUTISTA", matricula: "DOC-035", fechaInicio: "2025-09-30", fechaFin: "2025-10-02", serie: "1032501125006190", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "YAHEL ALEJANDRINA TORRES LOERA", matricula: "ADM-003", fechaInicio: "2025-09-30", fechaFin: "2025-10-02", serie: "1008601125008612", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "ENRIQUE GALLARDO SILVA", matricula: "DOC-039", fechaInicio: "2025-10-06", fechaFin: "2025-10-08", serie: "1032501125006276", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "ERICK DAVID BARRERA JUÁREZ", matricula: "ADM-015", fechaInicio: "2025-10-06", fechaFin: "2025-10-08", serie: "1032501125006287", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "GLORIA MATILDE BARRERA JUÁREZ", matricula: "ADM-016", fechaInicio: "2025-10-06", fechaFin: "2025-10-06", serie: "1032501125006282", dias: 1, motivo: "Incapacidad médica" },
-    { nombre: "ERICK DAVID BARRERA JUÁREZ", matricula: "ADM-015", fechaInicio: "2025-10-09", fechaFin: "2025-10-10", serie: "1032501125006389", dias: 2, motivo: "Incapacidad médica" },
-    { nombre: "BLANCA ESTELA VALDIVIA RAZO", matricula: "DOC-029", fechaInicio: "2025-10-09", fechaFin: "2025-10-11", serie: "1032501125006390", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "BANI GIEZI AGUILAR RODRÍGUEZ", matricula: "ADM-002", fechaInicio: "2025-10-17", fechaFin: "2025-10-23", serie: "1019001125001458", dias: 7, motivo: "Incapacidad médica" },
-    { nombre: "MITZI CARMEN CORONA MOSQUEDA", matricula: "ADM-019", fechaInicio: "2025-10-20", fechaFin: "2025-10-22", serie: "1032501125006639", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "GLORIA MATILDE BARRERA JUÁREZ", matricula: "ADM-016", fechaInicio: "2025-10-22", fechaFin: "2025-10-22", serie: "1032501125006694", dias: 1, motivo: "Incapacidad médica" },
-    { nombre: "AARÓN HERNÁNDEZ MONTES", matricula: "DOC-019", fechaInicio: "2025-10-21", fechaFin: "2025-10-23", serie: "1008601125009538", dias: 3, motivo: "Incapacidad médica" },
-    { nombre: "AGUSTÍN VIDAL FLORES", matricula: "ADM-005", fechaInicio: "2025-10-22", fechaFin: "2025-10-28", serie: "1032501125006763", dias: 7, motivo: "Incapacidad médica" },
-    { nombre: "OSCAR HILARIO ARENAS SAUCEDA", matricula: "DOC-032", fechaInicio: "2025-10-23", fechaFin: "2025-10-23", serie: "1032501125006738", dias: 1, motivo: "Incapacidad médica" },
-    { nombre: "AARÓN HERNÁNDEZ MONTES", matricula: "DOC-019", fechaInicio: "2025-10-24", fechaFin: "2025-11-03", serie: "1008601125009656", dias: 11, motivo: "Incapacidad médica" }
+    { nombre: "ERIKA LUGO HERRERA", matricula: "ADM-018", fechaInicio: "2025-09-11", fechaFin: "2025-09-12", serie: "1032501125005730", dias: 2, motivo: "Incapacidad médica" }
 ];
 
-// ==================== DATOS DE CONSTANCIAS (DEL ARCHIVO DOCX) ====================
+// ==================== DATOS DE CONSTANCIAS ====================
 const constanciasData = [
     { nombre: "ITZEL MARICELA GALLARDO ÁLVAREZ", matricula: "DOC-015", fecha: "2025-08-25", tipo: "CITA MEDICA", horario: "", descripcion: "CITA MEDICA CENTRO MEDICO NACIONAL" },
     { nombre: "ELVA ALEJANDRA MORALES MARTÍNEZ", matricula: "DOC-028", fecha: "2025-08-25", tipo: "TIEMPO", horario: "11:15 a 12:30", descripcion: "Constancia de tiempo" },
     { nombre: "PERLA LIZBETH FLORES MURILLO", matricula: "ADM-020", fecha: "2025-08-27", tipo: "TIEMPO", horario: "12:45 a 13:25", descripcion: "Constancia de tiempo" },
-    { nombre: "MARTHA ANGELICA ZAVALA RODRÍGUEZ", matricula: "DOC-038", fecha: "2025-08-29", tipo: "TIEMPO", horario: "07:30 a 07:55", descripcion: "Constancia de tiempo" },
-    { nombre: "ITZEL MARICELA GALLARDO ÁLVAREZ", matricula: "DOC-015", fechaInicio: "2025-09-02", fechaFin: "2025-09-08", tipo: "CUIDADOS MATERNOS", horario: "", descripcion: "Constancia de cuidados maternos" },
-    { nombre: "OSCAR HILARIO ARENAS SAUCEDA", matricula: "DOC-032", fecha: "2025-09-03", tipo: "COMISION OFICIAL", horario: "", descripcion: "Trámite a Guanajuato para cubrir horas" },
-    { nombre: "JESÚS ABRAHAM REYES PERALES", matricula: "DOC-042", fecha: "2025-09-03", tipo: "TIEMPO", horario: "07:45 a 09:45", descripcion: "Constancia de tiempo" },
-    { nombre: "MARÍA GUADALUPE PÉREZ BATALLA", matricula: "DOC-005", fecha: "2025-09-04", tipo: "COMISION OFICIAL", horario: "", descripcion: "Cita a Gto. para solicitud de beca comisión" },
-    { nombre: "JESÚS ABRAHAM REYES PERALES", matricula: "DOC-042", fecha: "2025-09-05", tipo: "CITA MEDICA", horario: "", descripcion: "Cita laboratorio ISSSTE" },
-    { nombre: "BLANCA ESTELA VALDIVIA RAZO", matricula: "DOC-029", fecha: "2025-09-05", tipo: "TIEMPO", horario: "08:00 a 09:15", descripcion: "Constancia de tiempo" },
-    { nombre: "GLORIA MATILDE BARRERA JUÁREZ", matricula: "ADM-016", fecha: "2025-09-09", tipo: "CITA MEDICA", horario: "", descripcion: "Permiso de dirección para acudir a cita médica en Hospital Regional Pemex" },
-    { nombre: "OSCAR HILARIO ARENAS SAUCEDA", matricula: "DOC-032", fecha: "2025-09-08", tipo: "COMISION OFICIAL", horario: "", descripcion: "Asistió CTE de Educación Física Zona 19" },
-    { nombre: "SAN JUANA FONSECA HERNÁNDEZ", matricula: "ADM-021", fecha: "2025-09-11", tipo: "TIEMPO", horario: "12:10 a 13:35", descripcion: "Constancia de tiempo" },
-    { nombre: "JESÚS ABRAHAM REYES PERALES", matricula: "DOC-042", fecha: "2025-09-12", tipo: "TIEMPO", horario: "10:40 a 11:50", descripcion: "Constancia de tiempo" },
-    { nombre: "ROSA MARIA DÍAZ ZULOAGA", matricula: "DOC-034", fecha: "2025-09-12", tipo: "TIEMPO", horario: "07:20 a 09:20", descripcion: "Constancia de tiempo" },
-    { nombre: "DIEGO EDUARDO PRADO CALDERÓN", matricula: "DOC-030", fecha: "2025-09-12", tipo: "COMISION OFICIAL", horario: "", descripcion: "Comisión Alfonso Reunión de PDF" },
-    { nombre: "YAHEL ALEJANDRINA TORRES LOERA", matricula: "ADM-003", fecha: "2025-09-15", tipo: "TIEMPO", horario: "13:00 a 17:00", descripcion: "Constancia de tiempo" },
-    { nombre: "FRANCISCO JAVIER RAYÓN GONZÁLEZ", matricula: "DOC-043", fecha: "2025-09-17", tipo: "TIEMPO", horario: "07:40 a 09:15", descripcion: "Constancia de tiempo" },
-    { nombre: "MARTHA ANGELICA ZAVALA RODRÍGUEZ", matricula: "DOC-038", fecha: "2025-09-17", tipo: "CITA MEDICA", horario: "09:00 a 10:15", descripcion: "Cita médica dental" },
-    { nombre: "MARIA GUADALUPE PÉREZ BATALLA", matricula: "DOC-005", fecha: "2025-09-19", tipo: "TIEMPO", horario: "14:30 a 16:30", descripcion: "Constancia de tiempo" }
+    { nombre: "MARTHA ANGELICA ZAVALA RODRÍGUEZ", matricula: "DOC-038", fecha: "2025-08-29", tipo: "TIEMPO", horario: "07:30 a 07:55", descripcion: "Constancia de tiempo" }
 ];
 
 // ==================== INICIALIZACIÓN DE DATOS ====================
 function initSampleData() {
     // Cargar datos de permisos económicos
     permisos = permisosEconomicosData.map(p => ({
-        ...p,
-        fecha: p.fecha
+        matricula: p.matricula,
+        nombre: p.nombre,
+        fecha: p.fecha,
+        mes: p.mes,
+        anio: p.anio || "2026",
+        motivo: p.motivo,
+        dias: p.dias
     }));
     
     // Cargar datos de incapacidades
@@ -137,116 +206,81 @@ function initSampleData() {
     constancias = constanciasData.map(c => ({
         matricula: c.matricula,
         nombre: c.nombre,
-        fecha: c.fecha || c.fechaInicio,
+        fecha: c.fecha,
         tipo: c.tipo,
         horario: c.horario || "",
-        descripcion: c.descripcion,
-        fechaInicio: c.fechaInicio,
-        fechaFin: c.fechaFin
+        descripcion: c.descripcion
     }));
 }
 
-function initPersonalData() {
-    personal = [
-        { numero: 1, matricula: "DIR-001", nombre: "LUIS CESAR ANDRADE GONZÁLEZ", funcion: "DIRECTOR", tipo: "directivo", estado: "BASE" },
-        { numero: 2, matricula: "SUB-001", nombre: "VERÓNICA VEGA TREJO", funcion: "SUBDIRECTORA TURNO VESPERTINO", tipo: "directivo", estado: "BASE" },
-        { numero: 3, matricula: "DOC-001", nombre: "MARIA FELICITAS HERNÁNDEZ RODRÍGUEZ", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
-        { numero: 4, matricula: "DOC-002", nombre: "ARACELI CAMARGO BARRÓN", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
-        { numero: 5, matricula: "DOC-003", nombre: "ALMA DELIA MORENO GUTIÉRREZ", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
-        { numero: 6, matricula: "DOC-004", nombre: "MARIA EDITH IVONNE NAVA BAUTISTA", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
-        { numero: 7, matricula: "DOC-005", nombre: "MARIA GUADALUPE PÉREZ BATALLA", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
-        { numero: 8, matricula: "DOC-006", nombre: "FERNANDO VENTURA GUTIÉRREZ", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
-        { numero: 9, matricula: "DOC-007", nombre: "CECILIA ALFARO PARAMO", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
-        { numero: 10, matricula: "DOC-008", nombre: "MILDRED NATASHA SANTANDER TURRUBIATES", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
-        { numero: 11, matricula: "DOC-009", nombre: "GERARDO DAVID GARCÍA GONZÁLEZ", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
-        { numero: 12, matricula: "DOC-010", nombre: "MARIA LORENA RAMÍREZ OLVERA", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
-        { numero: 13, matricula: "DOC-011", nombre: "ANDRÉS ISAÍAS CHÁVEZ NOLASCO", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
-        { numero: 14, matricula: "DOC-012", nombre: "SANTIAGO BALDERAS BAEZA", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
-        { numero: 15, matricula: "DOC-013", nombre: "ALAN ESQUIVEL CAMPOS", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
-        { numero: 16, matricula: "DOC-014", nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
-        { numero: 17, matricula: "DOC-015", nombre: "ITZEL MARICELA GALLARDO ÁLVAREZ", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
-        { numero: 18, matricula: "DOC-016", nombre: "AMALIA KARINA SANTIAGO LARA", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
-        { numero: 19, matricula: "DOC-017", nombre: "MANUEL GONZÁLEZ SILVA", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
-        { numero: 20, matricula: "DOC-018", nombre: "CORNELIO MOGOLLÓN MONDRAGÓN", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
-        { numero: 21, matricula: "DOC-019", nombre: "AARÓN HERNÁNDEZ MONTES", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
-        { numero: 22, matricula: "DOC-020", nombre: "GABRIEL BUENDIA RAMÍREZ", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
-        { numero: 23, matricula: "DOC-021", nombre: "EDUARDO FUERTE LONGORIA", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
-        { numero: 24, matricula: "DOC-022", nombre: "ARMANDO ALMANZA GONZÁLEZ", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
-        { numero: 25, matricula: "DOC-023", nombre: "MARÍA DEL ROCÍO NAVA BAUTISTA", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
-        { numero: 26, matricula: "DOC-024", nombre: "FRANCISCO ARTURO YAÑEZ PEREZ", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "INTERINO" },
-        { numero: 27, matricula: "DOC-025", nombre: "PAMELA GONZÁLEZ VILLAGÓMEZ", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "INTERINA" },
-        { numero: 28, matricula: "DOC-026", nombre: "GENOVEVA AYALA RENTERIA", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "INTERINA" },
-        { numero: 29, matricula: "DOC-027", nombre: "DIANA VALERIA ORTEGA DIAZ", funcion: "INGLES", tipo: "docente", estado: "BASE" },
-        { numero: 30, matricula: "DOC-028", nombre: "ELVA ALEJANDRA MORALES MARTÍNEZ", funcion: "INGLES", tipo: "docente", estado: "BASE" },
-        { numero: 31, matricula: "DOC-029", nombre: "BLANCA ESTELA VALDIVIA RAZO", funcion: "INGLES", tipo: "docente", estado: "BASE" },
-        { numero: 32, matricula: "DOC-030", nombre: "DIEGO EDUARDO PRADO CALDERÓN", funcion: "INGLES", tipo: "docente", estado: "BASE" },
-        { numero: 33, matricula: "DOC-031", nombre: "VANIA YITSSELL ECHEVERRÍA GALLEGOS", funcion: "EDUCACIÓN FÍSICA", tipo: "docente", estado: "BASE" },
-        { numero: 34, matricula: "DOC-032", nombre: "OSCAR HILARIO ARENAS SAUCEDA", funcion: "EDUCACIÓN FÍSICA", tipo: "docente", estado: "BASE" },
-        { numero: 35, matricula: "DOC-033", nombre: "ADILENE FUNES MIRANDA", funcion: "ARTES", tipo: "docente", estado: "BASE" },
-        { numero: 36, matricula: "DOC-034", nombre: "ROSA MARIA DIAZ ZULOAGA", funcion: "ARTES", tipo: "docente", estado: "BASE" },
-        { numero: 37, matricula: "DOC-035", nombre: "ROBERTO NAVA BAUTISTA", funcion: "ARTES Y BIBLIOTECA", tipo: "docente", estado: "BASE" },
-        { numero: 38, matricula: "DOC-036", nombre: "GABRIEL PEDRAZA ÁLVAREZ", funcion: "ARTES", tipo: "docente", estado: "BASE" },
-        { numero: 39, matricula: "DOC-037", nombre: "ARTEMIO JAVIER CONEJO BELMAN", funcion: "ARTES", tipo: "docente", estado: "INTERINO" },
-        { numero: 40, matricula: "DOC-038", nombre: "MARTHA ANGÉLICA ZAVALA RODRÍGUEZ", funcion: "TECNOLOGIAS", tipo: "docente", estado: "BASE" },
-        { numero: 41, matricula: "DOC-039", nombre: "ENRIQUE GALLARDO SILVA", funcion: "TECNOLOGIAS", tipo: "docente", estado: "BASE" },
-        { numero: 42, matricula: "DOC-040", nombre: "ADAN GABRIEL LOREDO CARDENAS", funcion: "TECNOLOGIAS", tipo: "docente", estado: "BASE" },
-        { numero: 43, matricula: "DOC-041", nombre: "SUSANA PEÑA MERINO", funcion: "TECNOLOGIAS", tipo: "docente", estado: "BASE" },
-        { numero: 44, matricula: "ADM-001", nombre: "CLAUDIO FABIAN GALLARDO ALVAREZ", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" },
-        { numero: 45, matricula: "ADM-002", nombre: "BANI GIEZI AGUILAR RODRÍGUEZ", funcion: "PSICOLOGA", tipo: "administrativo", estado: "BASE" },
-        { numero: 46, matricula: "ADM-003", nombre: "YAHEL ALEJANDRINA TORRES LOERA", funcion: "TRABAJADORA SOCIAL", tipo: "administrativo", estado: "BASE" },
-        { numero: 47, matricula: "ADM-004", nombre: "NANCY GUTIÉRREZ RUIZ", funcion: "USAER VESPERTINO", tipo: "administrativo", estado: "BASE" },
-        { numero: 48, matricula: "ADM-005", nombre: "AGUSTÍN VIDAL FLORES", funcion: "PREFECTO", tipo: "administrativo", estado: "BASE" },
-        { numero: 49, matricula: "ADM-006", nombre: "GERARDO FLORES MARTÍNEZ", funcion: "PREFECTO", tipo: "administrativo", estado: "BASE" },
-        { numero: 50, matricula: "ADM-007", nombre: "RAMIRO GARCÍA MARTÍNEZ", funcion: "PREFECTO", tipo: "administrativo", estado: "BASE" },
-        { numero: 51, matricula: "ADM-008", nombre: "ENERTINA CHÁVEZ LOPEZ", funcion: "ADMINISTRATIVA", tipo: "administrativo", estado: "BASE" },
-        { numero: 52, matricula: "ADM-009", nombre: "MA. CARMEN GARCIA OROZCO", funcion: "ADMINISTRATIVA", tipo: "administrativo", estado: "BASE" },
-        { numero: 53, matricula: "ADM-010", nombre: "RAFAEL RAMÍREZ AMEZQUITA", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 54, matricula: "ADM-011", nombre: "JOSÉ JORGE LARA RAMÍREZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 55, matricula: "ADM-012", nombre: "JOSÉ CRISTOBAL GONZÁLEZ RAMÍREZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 56, matricula: "ADM-013", nombre: "BRENDA MICHELLE CISNEROS ACOSTA", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 57, matricula: "ADM-014", nombre: "SONIA NÚÑEZ VÁZQUEZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "INTERINA" },
-        { numero: 58, matricula: "ADM-015", nombre: "ERICK DAVID BARRERA JUÁREZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 59, matricula: "ADM-016", nombre: "GLORIA MATILDE BARRERA JUÁREZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 60, matricula: "ADM-017", nombre: "LEONOR MARTÍNEZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 61, matricula: "ADM-018", nombre: "ERIKA LUGO HERRERA", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 62, matricula: "ADM-019", nombre: "MITZI CARMEN CORONA MOSQUEDA", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 63, matricula: "ADM-020", nombre: "PERLA LIZBETH FLORES MURILLO", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 64, matricula: "ADM-021", nombre: "SAN JUANA FONSECA HERNÁNDEZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
-        { numero: 65, matricula: "DOC-042", nombre: "JESÚS ABRAHAM REYES PERALES", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" },
-        { numero: 66, matricula: "DOC-043", nombre: "FRANCISCO JAVIER RAYÓN GONZÁLEZ", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" },
-        { numero: 67, matricula: "DOC-044", nombre: "JUAN MARCOS GÓMEZ FLORES", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" },
-        { numero: 68, matricula: "DOC-045", nombre: "JUANA TERESA MARTÍNEZ CALDERÓN", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" }
-    ];
+// ==================== FUNCIÓN PARA ACTUALIZAR RESÚMENES ====================
+function updateResumenPermisos() {
+    const resumenBody = document.getElementById('resumenPermisosBody');
+    if (!resumenBody) return;
     
-    initPersonalDetalles();
-}
-
-function initPersonalDetalles() {
-    personalDetalles = {};
-    personal.forEach(person => {
-        personalDetalles[person.matricula] = {
-            fechaIngreso: '',
-            email: '',
-            telefono: ''
-        };
+    // Agrupar permisos por profesor
+    const resumen = {};
+    
+    permisos.forEach(permiso => {
+        const key = permiso.matricula;
+        if (!resumen[key]) {
+            resumen[key] = {
+                matricula: permiso.matricula,
+                nombre: permiso.nombre,
+                totalPermisos: 0,
+                totalDias: 0,
+                meses: new Set()
+            };
+        }
+        resumen[key].totalPermisos++;
+        resumen[key].totalDias += permiso.dias;
+        if (permiso.mes) {
+            resumen[key].meses.add(permiso.mes);
+        }
     });
+    
+    const resumenArray = Object.values(resumen);
+    const resumenCount = document.getElementById('resumenCount');
+    if (resumenCount) resumenCount.textContent = `${resumenArray.length} profesores`;
+    
+    // Actualizar tarjetas de resumen
+    const totalPermisos = permisos.length;
+    const totalProfesoresConPermisos = resumenArray.length;
+    const promedioPermisos = totalProfesoresConPermisos > 0 ? (totalPermisos / totalProfesoresConPermisos).toFixed(1) : 0;
+    
+    const totalPermisosEl = document.getElementById('totalPermisos');
+    const totalProfesoresConPermisosEl = document.getElementById('totalProfesoresConPermisos');
+    const promedioPermisosEl = document.getElementById('promedioPermisos');
+    
+    if (totalPermisosEl) totalPermisosEl.textContent = totalPermisos;
+    if (totalProfesoresConPermisosEl) totalProfesoresConPermisosEl.textContent = totalProfesoresConPermisos;
+    if (promedioPermisosEl) promedioPermisosEl.textContent = promedioPermisos;
+    
+    if (resumenArray.length === 0) {
+        resumenBody.innerHTML = '<tr><td colspan="6" class="no-results">No hay registros de permisos</td></tr>';
+        return;
+    }
+    
+    // Ordenar por total de días descendente
+    resumenArray.sort((a, b) => b.totalDias - a.totalDias);
+    
+    resumenBody.innerHTML = resumenArray.map((prof, index) => `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${prof.matricula}</td>
+            <td><strong>${prof.nombre}</strong></td>
+            <td class="text-center">${prof.totalPermisos}</td>
+            <td class="text-center"><span class="badge-dias">${prof.totalDias} días</span></td>
+            <td>${Array.from(prof.meses).sort().join(', ')}</td>
+        </tr>
+    `).join('');
 }
 
-// Función para actualizar datalists de profesores
-function updateProfesoresDatalists() {
-    const profesoresList = document.getElementById('profesoresList');
-    const profesoresListConst = document.getElementById('profesoresListConst');
-    const profesoresListInc = document.getElementById('profesoresListInc');
-    
-    if (profesoresList) {
-        profesoresList.innerHTML = personal.map(p => `<option value="${p.nombre}">`).join('');
-    }
-    if (profesoresListConst) {
-        profesoresListConst.innerHTML = personal.map(p => `<option value="${p.nombre}">`).join('');
-    }
-    if (profesoresListInc) {
-        profesoresListInc.innerHTML = personal.map(p => `<option value="${p.nombre}">`).join('');
-    }
+// Función para calcular días a partir de fechas
+function calcularDiasDesdeFechas(fechasStr) {
+    if (!fechasStr) return 0;
+    const fechas = fechasStr.split(',').map(f => parseInt(f.trim()));
+    return fechas.length;
 }
 
 // ==================== FUNCIONES DE PESTAÑAS ====================
@@ -303,6 +337,7 @@ function updateAllTables() {
     updatePermisosTable();
     updateConstanciasTable();
     updateIncapacidadesTable();
+    updateResumenPermisos();
     updateRecordCounts();
 }
 
@@ -323,18 +358,19 @@ function updatePermisosTable() {
     const filteredPermisos = filterData(permisos);
     
     if (filteredPermisos.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" class="no-results">No se encontraron resultados</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" class="no-results">No se encontraron resultados</td></tr>';
         return;
     }
     
     tbody.innerHTML = filteredPermisos.map((permiso, index) => {
-        const originalIndex = permisos.findIndex(p => p.matricula === permiso.matricula && p.fecha === permiso.fecha);
+        const originalIndex = permisos.findIndex(p => p.matricula === permiso.matricula && p.fecha === permiso.fecha && p.mes === permiso.mes);
         return `
             <tr>
                 <td>${permiso.matricula || 'N/A'}</td>
                 <td>${permiso.nombre}</td>
                 <td>${permiso.fecha}</td>
-                <td>${permiso.mes || '-'}</td>
+                <td>${permiso.mes} ${permiso.anio || ''}</td>
+                <td class="text-center"><span class="badge-dias">${permiso.dias} día(s)</span></td>
                 <td>${permiso.motivo}</td>
                 <td>
                     <button onclick="deleteSingleRecord('permisos', ${originalIndex})" class="action-btn delete-row-btn">
@@ -353,7 +389,7 @@ function updateConstanciasTable() {
     const filteredConstancias = filterData(constancias);
     
     if (filteredConstancias.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" class="no-results">No se encontraron resultados</td></tr>';
+        tbody.innerHTML = '<td><td colspan="7" class="no-results">No se encontraron resultados</td></tr>';
         return;
     }
     
@@ -397,7 +433,7 @@ function updateIncapacidadesTable() {
                 <td>${formatDate(incapacidad.fechaInicio)}</td>
                 <td>${formatDate(incapacidad.fechaFin)}</td>
                 <td>${incapacidad.serie || '-'}</td>
-                <td>${incapacidad.dias}</td>
+                <td class="text-center">${incapacidad.dias}</td>
                 <td>${incapacidad.motivo}</td>
                 <td>
                     <button onclick="deleteSingleRecord('incapacidades', ${originalIndex})" class="action-btn delete-row-btn">
@@ -512,6 +548,22 @@ function deleteByMatricula() {
 
 // ==================== FUNCIONES DE FORMULARIOS ====================
 function initForms() {
+    // Calcular días automáticamente en el formulario de permisos
+    const fechaInput = document.getElementById('permisoFecha');
+    const diasInput = document.getElementById('permisoDias');
+    
+    if (fechaInput && diasInput) {
+        fechaInput.addEventListener('input', function() {
+            const fechasStr = this.value;
+            if (fechasStr) {
+                const dias = fechasStr.split(',').filter(f => f.trim()).length;
+                diasInput.value = dias;
+            } else {
+                diasInput.value = '';
+            }
+        });
+    }
+    
     // Auto-completar matrícula al seleccionar nombre
     function setupAutoComplete(inputId, matriculaId) {
         const nombreInput = document.getElementById(inputId);
@@ -535,16 +587,16 @@ function initForms() {
     // Calcular días de incapacidad
     const fechaInicio = document.getElementById('incapacidadFechaInicio');
     const fechaFin = document.getElementById('incapacidadFechaFin');
-    const diasInput = document.getElementById('incapacidadDias');
+    const diasInputInc = document.getElementById('incapacidadDias');
     
-    if (fechaInicio && fechaFin && diasInput) {
+    if (fechaInicio && fechaFin && diasInputInc) {
         function calcularDias() {
             if (fechaInicio.value && fechaFin.value) {
                 const inicio = new Date(fechaInicio.value);
                 const fin = new Date(fechaFin.value);
                 const diffTime = Math.abs(fin - inicio);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-                diasInput.value = diffDays;
+                diasInputInc.value = diffDays;
             }
         }
         
@@ -557,12 +609,17 @@ function initForms() {
     if (permisoForm) {
         permisoForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            const fechasStr = document.getElementById('permisoFecha').value;
+            const dias = fechasStr ? fechasStr.split(',').filter(f => f.trim()).length : 0;
+            
             const nuevoPermiso = {
                 matricula: document.getElementById('permisoMatricula').value,
                 nombre: document.getElementById('permisoNombre').value,
-                fecha: document.getElementById('permisoFecha').value,
+                fecha: fechasStr,
                 mes: document.getElementById('permisoMes').value,
-                motivo: document.getElementById('permisoMotivo').value
+                anio: document.getElementById('permisoAnio').value,
+                motivo: document.getElementById('permisoMotivo').value,
+                dias: dias
             };
             permisos.push(nuevoPermiso);
             updateAllTables();
@@ -618,6 +675,109 @@ function initForms() {
 }
 
 // ==================== FUNCIONES DE PERSONAL ====================
+function initPersonalData() {
+    personal = [
+        { numero: 1, matricula: "DIR-001", nombre: "LUIS CESAR ANDRADE GONZÁLEZ", funcion: "DIRECTOR", tipo: "directivo", estado: "BASE" },
+        { numero: 2, matricula: "SUB-001", nombre: "VERÓNICA VEGA TREJO", funcion: "SUBDIRECTORA TURNO VESPERTINO", tipo: "directivo", estado: "BASE" },
+        { numero: 3, matricula: "DOC-001", nombre: "MARIA FELICITAS HERNÁNDEZ RODRÍGUEZ", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
+        { numero: 4, matricula: "DOC-002", nombre: "ARACELI CAMARGO BARRÓN", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
+        { numero: 5, matricula: "DOC-003", nombre: "ALMA DELIA MORENO GUTIÉRREZ", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
+        { numero: 6, matricula: "DOC-004", nombre: "MARIA EDITH IVONNE NAVA BAUTISTA", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
+        { numero: 7, matricula: "DOC-005", nombre: "MARIA GUADALUPE PÉREZ BATALLA", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
+        { numero: 8, matricula: "DOC-006", nombre: "FERNANDO VENTURA GUTIÉRREZ", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
+        { numero: 9, matricula: "DOC-007", nombre: "CECILIA ALFARO PARAMO", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
+        { numero: 10, matricula: "DOC-008", nombre: "MILDRED NATASHA SANTANDER TURRUBIATES", funcion: "ESPAÑOL", tipo: "docente", estado: "BASE" },
+        { numero: 11, matricula: "DOC-009", nombre: "GERARDO DAVID GARCÍA GONZÁLEZ", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
+        { numero: 12, matricula: "DOC-010", nombre: "MARIA LORENA RAMÍREZ OLVERA", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
+        { numero: 13, matricula: "DOC-011", nombre: "ANDRÉS ISAÍAS CHÁVEZ NOLASCO", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
+        { numero: 14, matricula: "DOC-012", nombre: "SANTIAGO BALDERAS BAEZA", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
+        { numero: 15, matricula: "DOC-013", nombre: "ALAN ESQUIVEL CAMPOS", funcion: "MATEMÁTICAS", tipo: "docente", estado: "BASE" },
+        { numero: 16, matricula: "DOC-014", nombre: "CLAUDIA ROCIO GUERRERO ALTAMIRANO", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
+        { numero: 17, matricula: "DOC-015", nombre: "ITZEL MARICELA GALLARDO ÁLVAREZ", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
+        { numero: 18, matricula: "DOC-016", nombre: "AMALIA KARINA SANTIAGO LARA", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
+        { numero: 19, matricula: "DOC-017", nombre: "MANUEL GONZÁLEZ SILVA", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
+        { numero: 20, matricula: "DOC-018", nombre: "CORNELIO MOGOLLÓN MONDRAGÓN", funcion: "CIENCIAS NATURALES", tipo: "docente", estado: "BASE" },
+        { numero: 21, matricula: "DOC-019", nombre: "AARÓN HERNÁNDEZ MONTES", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
+        { numero: 22, matricula: "DOC-020", nombre: "GABRIEL BUENDIA RAMÍREZ", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
+        { numero: 23, matricula: "DOC-021", nombre: "EDUARDO FUERTE LONGORIA", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
+        { numero: 24, matricula: "DOC-022", nombre: "ARMANDO ALMANZA GONZÁLEZ", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
+        { numero: 25, matricula: "DOC-023", nombre: "MARÍA DEL ROCÍO NAVA BAUTISTA", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "BASE" },
+        { numero: 26, matricula: "DOC-024", nombre: "FRANCISCO ARTURO YAÑEZ PEREZ", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "INTERINO" },
+        { numero: 27, matricula: "DOC-025", nombre: "PAMELA GONZÁLEZ VILLAGÓMEZ", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "INTERINA" },
+        { numero: 28, matricula: "DOC-026", nombre: "GENOVEVA AYALA RENTERIA", funcion: "CIENCIAS SOCIALES", tipo: "docente", estado: "INTERINA" },
+        { numero: 29, matricula: "DOC-027", nombre: "DIANA VALERIA ORTEGA DIAZ", funcion: "INGLES", tipo: "docente", estado: "BASE" },
+        { numero: 30, matricula: "DOC-028", nombre: "ELVA ALEJANDRA MORALES MARTÍNEZ", funcion: "INGLES", tipo: "docente", estado: "BASE" },
+        { numero: 31, matricula: "DOC-029", nombre: "BLANCA ESTELA VALDIVIA RAZO", funcion: "INGLES", tipo: "docente", estado: "BASE" },
+        { numero: 32, matricula: "DOC-030", nombre: "DIEGO EDUARDO PRADO CALDERÓN", funcion: "INGLES", tipo: "docente", estado: "BASE" },
+        { numero: 33, matricula: "DOC-031", nombre: "VANIA YITSSELL ECHEVERRÍA GALLEGOS", funcion: "EDUCACIÓN FÍSICA", tipo: "docente", estado: "BASE" },
+        { numero: 34, matricula: "DOC-032", nombre: "OSCAR HILARIO ARENAS SAUCEDA", funcion: "EDUCACIÓN FÍSICA", tipo: "docente", estado: "BASE" },
+        { numero: 35, matricula: "DOC-033", nombre: "ADILENE FUNES MIRANDA", funcion: "ARTES", tipo: "docente", estado: "BASE" },
+        { numero: 36, matricula: "DOC-034", nombre: "ROSA MARIA DIAZ ZULOAGA", funcion: "ARTES", tipo: "docente", estado: "BASE" },
+        { numero: 37, matricula: "DOC-035", nombre: "ROBERTO NAVA BAUTISTA", funcion: "ARTES Y BIBLIOTECA", tipo: "docente", estado: "BASE" },
+        { numero: 38, matricula: "DOC-036", nombre: "GABRIEL PEDRAZA ÁLVAREZ", funcion: "ARTES", tipo: "docente", estado: "BASE" },
+        { numero: 39, matricula: "DOC-037", nombre: "ARTEMIO JAVIER CONEJO BELMAN", funcion: "ARTES", tipo: "docente", estado: "INTERINO" },
+        { numero: 40, matricula: "DOC-038", nombre: "MARTHA ANGÉLICA ZAVALA RODRÍGUEZ", funcion: "TECNOLOGIAS", tipo: "docente", estado: "BASE" },
+        { numero: 41, matricula: "DOC-039", nombre: "ENRIQUE GALLARDO SILVA", funcion: "TECNOLOGIAS", tipo: "docente", estado: "BASE" },
+        { numero: 42, matricula: "DOC-040", nombre: "ADAN GABRIEL LOREDO CARDENAS", funcion: "TECNOLOGIAS", tipo: "docente", estado: "BASE" },
+        { numero: 43, matricula: "DOC-041", nombre: "SUSANA PEÑA MERINO", funcion: "TECNOLOGIAS", tipo: "docente", estado: "BASE" },
+        { numero: 44, matricula: "ADM-001", nombre: "CLAUDIO FABIAN GALLARDO ALVAREZ", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" },
+        { numero: 45, matricula: "ADM-002", nombre: "BANI GIEZI AGUILAR RODRÍGUEZ", funcion: "PSICOLOGA", tipo: "administrativo", estado: "BASE" },
+        { numero: 46, matricula: "ADM-003", nombre: "YAHEL ALEJANDRINA TORRES LOERA", funcion: "TRABAJADORA SOCIAL", tipo: "administrativo", estado: "BASE" },
+        { numero: 47, matricula: "ADM-004", nombre: "NANCY GUTIÉRREZ RUIZ", funcion: "USAER VESPERTINO", tipo: "administrativo", estado: "BASE" },
+        { numero: 48, matricula: "ADM-005", nombre: "AGUSTÍN VIDAL FLORES", funcion: "PREFECTO", tipo: "administrativo", estado: "BASE" },
+        { numero: 49, matricula: "ADM-006", nombre: "GERARDO FLORES MARTÍNEZ", funcion: "PREFECTO", tipo: "administrativo", estado: "BASE" },
+        { numero: 50, matricula: "ADM-007", nombre: "RAMIRO GARCÍA MARTÍNEZ", funcion: "PREFECTO", tipo: "administrativo", estado: "BASE" },
+        { numero: 51, matricula: "ADM-008", nombre: "ENERTINA CHÁVEZ LOPEZ", funcion: "ADMINISTRATIVA", tipo: "administrativo", estado: "BASE" },
+        { numero: 52, matricula: "ADM-009", nombre: "MA. CARMEN GARCIA OROZCO", funcion: "ADMINISTRATIVA", tipo: "administrativo", estado: "BASE" },
+        { numero: 53, matricula: "ADM-010", nombre: "RAFAEL RAMÍREZ AMEZQUITA", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 54, matricula: "ADM-011", nombre: "JOSÉ JORGE LARA RAMÍREZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 55, matricula: "ADM-012", nombre: "JOSÉ CRISTOBAL GONZÁLEZ RAMÍREZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 56, matricula: "ADM-013", nombre: "BRENDA MICHELLE CISNEROS ACOSTA", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 57, matricula: "ADM-014", nombre: "SONIA NÚÑEZ VÁZQUEZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "INTERINA" },
+        { numero: 58, matricula: "ADM-015", nombre: "ERICK DAVID BARRERA JUÁREZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 59, matricula: "ADM-016", nombre: "GLORIA MATILDE BARRERA JUÁREZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 60, matricula: "ADM-017", nombre: "LEONOR MARTÍNEZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 61, matricula: "ADM-018", nombre: "ERIKA LUGO HERRERA", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 62, matricula: "ADM-019", nombre: "MITZI CARMEN CORONA MOSQUEDA", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 63, matricula: "ADM-020", nombre: "PERLA LIZBETH FLORES MURILLO", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 64, matricula: "ADM-021", nombre: "SAN JUANA FONSECA HERNÁNDEZ", funcion: "INTENDENTE", tipo: "administrativo", estado: "BASE" },
+        { numero: 65, matricula: "DOC-042", nombre: "JESÚS ABRAHAM REYES PERALES", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" },
+        { numero: 66, matricula: "DOC-043", nombre: "FRANCISCO JAVIER RAYÓN GONZÁLEZ", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" },
+        { numero: 67, matricula: "DOC-044", nombre: "JUAN MARCOS GÓMEZ FLORES", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" },
+        { numero: 68, matricula: "DOC-045", nombre: "JUANA TERESA MARTÍNEZ CALDERÓN", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" },
+        { numero: 69, matricula: "DOC-046", nombre: "ILIUSI VIRIDIANA RODRÍGUEZ CORTES", funcion: "AUXILIAR DE LABORATORIO", tipo: "administrativo", estado: "BASE" }
+    ];
+    
+    initPersonalDetalles();
+}
+
+function initPersonalDetalles() {
+    personalDetalles = {};
+    personal.forEach(person => {
+        personalDetalles[person.matricula] = {
+            fechaIngreso: '',
+            email: '',
+            telefono: ''
+        };
+    });
+}
+
+function updateProfesoresDatalists() {
+    const profesoresList = document.getElementById('profesoresList');
+    const profesoresListConst = document.getElementById('profesoresListConst');
+    const profesoresListInc = document.getElementById('profesoresListInc');
+    
+    if (profesoresList) {
+        profesoresList.innerHTML = personal.map(p => `<option value="${p.nombre}">`).join('');
+    }
+    if (profesoresListConst) {
+        profesoresListConst.innerHTML = personal.map(p => `<option value="${p.nombre}">`).join('');
+    }
+    if (profesoresListInc) {
+        profesoresListInc.innerHTML = personal.map(p => `<option value="${p.nombre}">`).join('');
+    }
+}
+
 function updateReportView() {
     const reportType = document.getElementById('reportType');
     const functionFilter = document.getElementById('functionFilter');
@@ -885,8 +1045,10 @@ function exportToExcel() {
             data = filterData(permisos).map(p => ({
                 Matrícula: p.matricula,
                 Nombre: p.nombre,
-                Fecha: p.fecha,
+                'Fecha(s)': p.fecha,
                 Mes: p.mes,
+                Año: p.anio,
+                Días: p.dias,
                 Motivo: p.motivo
             }));
             sheetName = 'Permisos Económicos';
