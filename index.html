@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Profesores - Escuela Secundaria Albino TV</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Gestión de Profesores</h1>
+            <p class="subtitle">Permisos Económicos, Constancias Médicas, Incapacidades y Relación de Personal</p>
+            <p class="school-info">Escuela Secundaria Técnica Albino TV - Ciclo Escolar 2025-2026</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Buscar profesor por nombre o matrícula..." class="search-input">
+            </div>
+            <button onclick="searchTeacher()" class="btn-search">
+                <i class="fas fa-search"></i> Buscar
+            </button>
+            <button onclick="exportToExcel()" class="btn-excel">
+                <i class="fas fa-file-excel"></i> Exportar a Excel
+            </button>
+        </div>
+
+        <div class="admin-section">
+            <button onclick="showDeleteModal()" class="btn-delete">
+                <i class="fas fa-trash-alt"></i> Eliminar Registros
+            </button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('permisos')">
+                <i class="fas fa-money-bill-wave"></i> Permisos Económicos
+            </button>
+            <button class="tab-btn" onclick="showTab('constancias')">
+                <i class="fas fa-file-medical"></i> Constancias Médicas
+            </button>
+            <button class="tab-btn" onclick="showTab('incapacidades')">
+                <i class="fas fa-wheelchair"></i> Incapacidades
+            </button>
+            <button class="tab-btn" onclick="showTab('personal')">
+                <i class="fas fa-users"></i> Relación de Personal
+            </button>
+        </div>
+
+        <!-- Modal de eliminación -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Eliminar Registros</h2>
+                    <span class="close" onclick="closeDeleteModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Seleccione el tipo de registro que desea eliminar:</p>
+                    <div class="delete-options">
+                        <button onclick="deleteByType('permisos')" class="delete-option-btn">
+                            <i class="fas fa-money-bill-wave"></i> Todos los Permisos
+                        </button>
+                        <button onclick="deleteByType('constancias')" class="delete-option-btn">
+                            <i class="fas fa-file-medical"></i> Todas las Constancias
+                        </button>
+                        <button onclick="deleteByType('incapacidades')" class="delete-option-btn">
+                            <i class="fas fa-wheelchair"></i> Todas las Incapacidades
+                        </button>
+                        <button onclick="deleteByType('all')" class="delete-option-btn delete-all">
+                            <i class="fas fa-trash-alt"></i> Todos los Registros
+                        </button>
+                    </div>
+                    <div class="delete-by-id">
+                        <h3>Eliminar por Matrícula:</h3>
+                        <div class="delete-id-input">
+                            <input type="text" id="deleteMatricula" placeholder="Ingrese la matrícula del profesor">
+                            <button onclick="deleteByMatricula()" class="btn-delete-id">
+                                <i class="fas fa-user-minus"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña de Permisos Económicos -->
+        <div id="permisos" class="tab-content active">
+            <h2><i class="fas fa-money-bill-wave"></i> Permisos Económicos</h2>
+            <div class="info-banner">
+                <i class="fas fa-info-circle"></i>
+                <span>Registro de permisos económicos del ciclo escolar 2025-2026</span>
+            </div>
+            <div class="form-section">
+                <h3>Agregar Permiso Económico</h3>
+                <form id="permisoForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Nombre del Profesor:</label>
+                            <input type="text" id="permisoNombre" list="profesoresList" placeholder="Seleccione o escriba el nombre" required>
+                            <datalist id="profesoresList"></datalist>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card"></i> Matrícula:</label>
+                            <input type="text" id="permisoMatricula" placeholder="Ej: DOC-001" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Fecha:</label>
+                            <input type="date" id="permisoFecha" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> Mes:</label>
+                            <select id="permisoMes">
+                                <option value="AGO">Agosto</option>
+                                <option value="SEP">Septiembre</option>
+                                <option value="OCT">Octubre</option>
+                                <option value="NOV">Noviembre</option>
+                                <option value="DIC">Diciembre</option>
+                                <option value="ENE">Enero</option>
+                                <option value="FEB">Febrero</option>
+                                <option value="MAR">Marzo</option>
+                                <option value="ABR">Abril</option>
+                                <option value="MAY">Mayo</option>
+                                <option value="JUN">Junio</option>
+                                <option value="JUL">Julio</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-comment"></i> Motivo:</label>
+                        <textarea id="permisoMotivo" placeholder="Describa el motivo del permiso" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-plus-circle"></i> Agregar Permiso
+                    </button>
+                </form>
+            </div>
+            <div class="table-section">
+                <div class="table-header">
+                    <h3><i class="fas fa-list"></i> Lista de Permisos Económicos</h3>
+                    <span class="record-count" id="permisosCount">0 registros</span>
+                </div>
+                <div class="table-responsive">
+                    <table id="permisosTable">
+                        <thead>
+                            <tr>
+                                <th>Matrícula</th>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Mes</th>
+                                <th>Motivo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="permisosBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña de Constancias Médicas -->
+        <div id="constancias" class="tab-content">
+            <h2><i class="fas fa-file-medical"></i> Constancias Médicas</h2>
+            <div class="info-banner">
+                <i class="fas fa-info-circle"></i>
+                <span>Constancias de tiempo, cuidados maternos, citas médicas y comisiones oficiales</span>
+            </div>
+            <div class="form-section">
+                <h3>Agregar Constancia</h3>
+                <form id="constanciaForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Nombre del Profesor:</label>
+                            <input type="text" id="constanciaNombre" list="profesoresListConst" placeholder="Seleccione o escriba el nombre" required>
+                            <datalist id="profesoresListConst"></datalist>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card"></i> Matrícula:</label>
+                            <input type="text" id="constanciaMatricula" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Fecha:</label>
+                            <input type="date" id="constanciaFecha" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-tag"></i> Tipo de Constancia:</label>
+                            <select id="constanciaTipo" required>
+                                <option value="TIEMPO">Constancia de Tiempo</option>
+                                <option value="CUIDADOS MATERNOS">Constancia de Cuidados Maternos</option>
+                                <option value="CITA MEDICA">Cita Médica</option>
+                                <option value="COMISION OFICIAL">Comisión Oficial</option>
+                                <option value="PERMANENCIA">Constancia de Permanencia</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Hora de Inicio:</label>
+                            <input type="time" id="constanciaHoraInicio">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Hora de Fin:</label>
+                            <input type="time" id="constanciaHoraFin">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-stethoscope"></i> Descripción / Observaciones:</label>
+                        <textarea id="constanciaDescripcion" placeholder="Describa el motivo de la constancia" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-plus-circle"></i> Agregar Constancia
+                    </button>
+                </form>
+            </div>
+            <div class="table-section">
+                <div class="table-header">
+                    <h3><i class="fas fa-list"></i> Lista de Constancias</h3>
+                    <span class="record-count" id="constanciasCount">0 registros</span>
+                </div>
+                <div class="table-responsive">
+                    <table id="constanciasTable">
+                        <thead>
+                            <tr>
+                                <th>Matrícula</th>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th>Horario</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="constanciasBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña de Incapacidades -->
+        <div id="incapacidades" class="tab-content">
+            <h2><i class="fas fa-wheelchair"></i> Incapacidades Médicas</h2>
+            <div class="info-banner">
+                <i class="fas fa-info-circle"></i>
+                <span>Registro de licencias médicas e incapacidades del ciclo escolar 2025-2026</span>
+            </div>
+            <div class="form-section">
+                <h3>Agregar Incapacidad</h3>
+                <form id="incapacidadForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Nombre del Profesor:</label>
+                            <input type="text" id="incapacidadNombre" list="profesoresListInc" placeholder="Seleccione o escriba el nombre" required>
+                            <datalist id="profesoresListInc"></datalist>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card"></i> Matrícula:</label>
+                            <input type="text" id="incapacidadMatricula" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> Fecha Inicio:</label>
+                            <input type="date" id="incapacidadFechaInicio" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-check"></i> Fecha Fin:</label>
+                            <input type="date" id="incapacidadFechaFin" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-barcode"></i> No. de Serie:</label>
+                            <input type="text" id="incapacidadSerie" placeholder="Número de serie de la licencia médica">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-hourglass-half"></i> Días de Incapacidad:</label>
+                            <input type="number" id="incapacidadDias" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-comment"></i> Motivo / Diagnóstico:</label>
+                        <textarea id="incapacidadMotivo" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-plus-circle"></i> Agregar Incapacidad
+                    </button>
+                </form>
+            </div>
+            <div class="table-section">
+                <div class="table-header">
+                    <h3><i class="fas fa-list"></i> Lista de Incapacidades</h3>
+                    <span class="record-count" id="incapacidadesCount">0 registros</span>
+                </div>
+                <div class="table-responsive">
+                    <table id="incapacidadesTable">
+                        <thead>
+                            <tr>
+                                <th>Matrícula</th>
+                                <th>Nombre</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Fin</th>
+                                <th>No. Serie</th>
+                                <th>Días</th>
+                                <th>Motivo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="incapacidadesBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestaña de Relación de Personal -->
+        <div id="personal" class="tab-content">
+            <h2><i class="fas fa-users"></i> Relación de Personal</h2>
+            
+            <div class="add-personal-btn-container">
+                <button onclick="showAddPersonalModal()" class="btn-add-personal">
+                    <i class="fas fa-user-plus"></i> Registrar Nuevo Personal
+                </button>
+            </div>
+            
+            <div class="report-filters">
+                <h3><i class="fas fa-filter"></i> Filtros del Reporte</h3>
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label><i class="fas fa-chart-line"></i> Tipo de Reporte:</label>
+                        <select id="reportType" onchange="updateReportView()">
+                            <option value="all">Todos los Empleados</option>
+                            <option value="docentes">Docentes</option>
+                            <option value="administrativos">Personal Administrativo</option>
+                            <option value="directivos">Directivos</option>
+                            <option value="interinos">Personal Interino</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-graduation-cap"></i> Perfil/Función:</label>
+                        <select id="functionFilter" onchange="updateReportView()">
+                            <option value="all">Todos</option>
+                            <option value="DIRECTOR">Director</option>
+                            <option value="SUBDIRECTORA">Subdirectora</option>
+                            <option value="ESPAÑOL">Español</option>
+                            <option value="MATEMÁTICAS">Matemáticas</option>
+                            <option value="CIENCIAS NATURALES">Ciencias Naturales</option>
+                            <option value="CIENCIAS SOCIALES">Ciencias Sociales</option>
+                            <option value="INGLES">Inglés</option>
+                            <option value="EDUCACIÓN FÍSICA">Educación Física</option>
+                            <option value="ARTES">Artes</option>
+                            <option value="TECNOLOGIAS">Tecnologías</option>
+                            <option value="PREFECTO">Prefecto</option>
+                            <option value="INTENDENTE">Intendente</option>
+                            <option value="ADMINISTRATIVA">Administrativa</option>
+                            <option value="PSICOLOGA">Psicóloga</option>
+                            <option value="TRABAJADORA SOCIAL">Trabajadora Social</option>
+                            <option value="AUXILIAR DE LABORATORIO">Auxiliar de Laboratorio</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-search"></i> Buscar por Nombre:</label>
+                        <input type="text" id="personalSearch" placeholder="Nombre del empleado..." onkeyup="updateReportView()">
+                    </div>
+                </div>
+                <div class="report-actions">
+                    <button onclick="exportPersonalToExcel()" class="btn-excel-report">
+                        <i class="fas fa-file-excel"></i> Exportar Reporte a Excel
+                    </button>
+                    <button onclick="printReport()" class="btn-print">
+                        <i class="fas fa-print"></i> Imprimir Reporte
+                    </button>
+                </div>
+            </div>
+
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <div class="stat-info">
+                        <h3>Total Personal</h3>
+                        <p id="totalPersonal">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-graduate"></i>
+                    <div class="stat-info">
+                        <h3>Docentes</h3>
+                        <p id="totalDocentes">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-tie"></i>
+                    <div class="stat-info">
+                        <h3>Directivos</h3>
+                        <p id="totalDirectivos">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-cog"></i>
+                    <div class="stat-info">
+                        <h3>Administrativos</h3>
+                        <p id="totalAdministrativos">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <div class="table-header">
+                    <h3><i class="fas fa-list"></i> Lista de Personal</h3>
+                    <span class="record-count" id="personalCount">0 registros</span>
+                </div>
+                <div class="table-responsive">
+                    <table id="personalTable">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Matrícula</th>
+                                <th>Nombre Completo</th>
+                                <th>Perfil/Función</th>
+                                <th>Tipo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="personalBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar nuevo personal -->
+    <div id="addPersonalModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> Registrar Nuevo Personal</h2>
+                <span class="close" onclick="closeAddPersonalModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addPersonalForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card"></i> Matrícula:</label>
+                            <input type="text" id="newMatricula" placeholder="Ej: DOC-040" required>
+                            <small class="form-hint">Formato: DOC-XXX, ADM-XXX, DIR-XXX</small>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Nombre Completo:</label>
+                            <input type="text" id="newNombre" placeholder="Apellidos y Nombre" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-briefcase"></i> Perfil/Función:</label>
+                            <select id="newFuncion" required>
+                                <option value="">Seleccione una función...</option>
+                                <optgroup label="Directivos">
+                                    <option value="DIRECTOR">Director</option>
+                                    <option value="SUBDIRECTORA TURNO VESPERTINO">Subdirectora Turno Vespertino</option>
+                                </optgroup>
+                                <optgroup label="Docentes">
+                                    <option value="ESPAÑOL">Español</option>
+                                    <option value="MATEMÁTICAS">Matemáticas</option>
+                                    <option value="CIENCIAS NATURALES">Ciencias Naturales</option>
+                                    <option value="CIENCIAS SOCIALES">Ciencias Sociales</option>
+                                    <option value="INGLES">Inglés</option>
+                                    <option value="EDUCACIÓN FÍSICA">Educación Física</option>
+                                    <option value="ARTES">Artes</option>
+                                    <option value="ARTES Y BIBLIOTECA">Artes y Biblioteca</option>
+                                    <option value="TECNOLOGIAS">Tecnologías</option>
+                                </optgroup>
+                                <optgroup label="Administrativos">
+                                    <option value="AUXILIAR DE LABORATORIO">Auxiliar de Laboratorio</option>
+                                    <option value="PSICOLOGA">Psicóloga</option>
+                                    <option value="TRABAJADORA SOCIAL">Trabajadora Social</option>
+                                    <option value="USAER VESPERTINO">USAER Vespertino</option>
+                                    <option value="PREFECTO">Prefecto</option>
+                                    <option value="ADMINISTRATIVA">Administrativa</option>
+                                    <option value="INTENDENTE">Intendente</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-tag"></i> Tipo:</label>
+                            <select id="newTipo" required>
+                                <option value="">Seleccione un tipo...</option>
+                                <option value="directivo">Directivo</option>
+                                <option value="docente">Docente</option>
+                                <option value="administrativo">Administrativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-star"></i> Estado:</label>
+                            <select id="newEstado" required>
+                                <option value="BASE">BASE</option>
+                                <option value="INTERINO">INTERINO</option>
+                                <option value="INTERINA">INTERINA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> Fecha de Ingreso:</label>
+                            <input type="date" id="newFechaIngreso">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Correo Electrónico:</label>
+                            <input type="email" id="newEmail" placeholder="correo@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Teléfono:</label>
+                            <input type="tel" id="newTelefono" placeholder="Ej: 1234567890">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="closeAddPersonalModal()" class="btn-cancel">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-save"></i> Registrar Personal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar personal -->
+    <div id="editPersonalModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2><i class="fas fa-edit"></i> Editar Personal</h2>
+                <span class="close" onclick="closeEditPersonalModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="editPersonalForm">
+                    <input type="hidden" id="editIndex">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card"></i> Matrícula:</label>
+                            <input type="text" id="editMatricula" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Nombre Completo:</label>
+                            <input type="text" id="editNombre" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-briefcase"></i> Perfil/Función:</label>
+                            <select id="editFuncion" required>
+                                <option value="">Seleccione una función...</option>
+                                <optgroup label="Directivos">
+                                    <option value="DIRECTOR">Director</option>
+                                    <option value="SUBDIRECTORA TURNO VESPERTINO">Subdirectora Turno Vespertino</option>
+                                </optgroup>
+                                <optgroup label="Docentes">
+                                    <option value="ESPAÑOL">Español</option>
+                                    <option value="MATEMÁTICAS">Matemáticas</option>
+                                    <option value="CIENCIAS NATURALES">Ciencias Naturales</option>
+                                    <option value="CIENCIAS SOCIALES">Ciencias Sociales</option>
+                                    <option value="INGLES">Inglés</option>
+                                    <option value="EDUCACIÓN FÍSICA">Educación Física</option>
+                                    <option value="ARTES">Artes</option>
+                                    <option value="ARTES Y BIBLIOTECA">Artes y Biblioteca</option>
+                                    <option value="TECNOLOGIAS">Tecnologías</option>
+                                </optgroup>
+                                <optgroup label="Administrativos">
+                                    <option value="AUXILIAR DE LABORATORIO">Auxiliar de Laboratorio</option>
+                                    <option value="PSICOLOGA">Psicóloga</option>
+                                    <option value="TRABAJADORA SOCIAL">Trabajadora Social</option>
+                                    <option value="USAER VESPERTINO">USAER Vespertino</option>
+                                    <option value="PREFECTO">Prefecto</option>
+                                    <option value="ADMINISTRATIVA">Administrativa</option>
+                                    <option value="INTENDENTE">Intendente</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-tag"></i> Tipo:</label>
+                            <select id="editTipo" required>
+                                <option value="directivo">Directivo</option>
+                                <option value="docente">Docente</option>
+                                <option value="administrativo">Administrativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-star"></i> Estado:</label>
+                            <select id="editEstado" required>
+                                <option value="BASE">BASE</option>
+                                <option value="INTERINO">INTERINO</option>
+                                <option value="INTERINA">INTERINA</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> Fecha de Ingreso:</label>
+                            <input type="date" id="editFechaIngreso">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Correo Electrónico:</label>
+                            <input type="email" id="editEmail">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-phone"></i> Teléfono:</label>
+                            <input type="tel" id="editTelefono">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" onclick="closeEditPersonalModal()" class="btn-cancel">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-save"></i> Actualizar Personal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
